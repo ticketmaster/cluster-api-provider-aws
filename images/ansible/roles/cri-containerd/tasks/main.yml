@@ -20,18 +20,18 @@
 
 # TODO(vincepri): Use deb/rpm packages once available.
 # See https://github.com/containerd/containerd/issues/1508 for context.
-- name: download containerd
+- name: download cri-containerd tarball
   get_url:
-    url: https://storage.googleapis.com/cri-containerd-release/cri-containerd-{{ containerd_version }}.linux-amd64.tar.gz
-    checksum: "sha256:{{ containerd_sha256 }}"
-    dest: /tmp/containerd.tar.gz
+    url: https://storage.googleapis.com/cri-containerd-release/cri-containerd-{{ cri_containerd_version }}.linux-amd64.tar.gz
+    checksum: "sha256:{{ cri_containerd_sha256 }}"
+    dest: /tmp/cri-containerd.tar.gz
 
 # TODO(vincepri): This unpacks the entire tar in the root directory
 # we should find a better way to check what's being unpacked and where.
-- name: unpack containerd
+- name: unpack cri-containerd tarball
   unarchive:
     remote_src: True
-    src: /tmp/containerd.tar.gz
+    src: /tmp/cri-containerd.tar.gz
     dest: /
     extra_opts:
       - --no-overwrite-dir
@@ -42,3 +42,8 @@
     daemon_reload: yes
     enabled: True
     state: started
+
+- name: delete cri-containerd tarball
+  file:
+    state: absent
+    path: /tmp/cri-containerd.tar.gz

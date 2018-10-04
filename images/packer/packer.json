@@ -3,6 +3,8 @@
     "aws_access_key": "",
     "aws_secret_key": "",
     "build_timestamp": "{{timestamp}}",
+    "cri_containerd_version": "1.1.4",
+    "cri_containerd_sha256": "6a3c1cd4eed732bb67b2528eb230db076c9fd30ae12893463f4608f3388c0aeb",
     "kubernetes_version": "1.12.0-00",
     "kubernetes_cni_version": "0.6.0-00",
     "existing_ansible_ssh_args": "{{env `ANSIBLE_SSH_ARGS`}}",
@@ -28,6 +30,7 @@
         "distribution": "Ubuntu",
         "distribution_release": "bionic",
         "distribution_version": "18.04",
+        "cri_containerd_version": "{{user `cri_containerd_version`}}",
         "kubernetes_version": "{{user `kubernetes_version`}}",
         "kubernetes_cni_version": "{{user `kubernetes_cni_version`}}"
       }
@@ -51,6 +54,7 @@
         "distribution": "CentOS",
         "distribution_release": "Core",
         "distribution_version": "7",
+        "cri_containerd_version": "{{user `cri_containerd_version`}}",
         "kubernetes_version": "{{user `kubernetes_version`}}",
         "kubernetes_cni_version": "{{user `kubernetes_cni_version`}}"
       }
@@ -73,6 +77,7 @@
         "distribution": "Amazon Linux",
         "distribution_release": "Amazon Linux 2",
         "distribution_version": "2",
+        "cri_containerd_version": "{{user `cri_containerd_version`}}",
         "kubernetes_version": "{{user `kubernetes_version`}}",
         "kubernetes_cni_version": "{{user `kubernetes_cni_version`}}"
       }
@@ -97,7 +102,7 @@
       ],
       "extra_arguments": [
         "--extra-vars",
-        "kubernetes_version={{user `kubernetes_version`}} kubernetes_cni_version={{user `kubernetes_cni_version`}}"
+        "cri_containerd_version={{user `cri_containerd_version`}} cri_containerd_sha256={{user `cri_containerd_sha256`}} kubernetes_version={{user `kubernetes_version`}} kubernetes_cni_version={{user `kubernetes_cni_version`}}"
       ]
     }
   ]
