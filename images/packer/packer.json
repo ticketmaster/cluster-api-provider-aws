@@ -40,7 +40,7 @@
       "subnet_id": "{{user `build_subnet_id`}}",
       "tags": {
         "build_timestamp": "{{user `build_timestamp`}}",
-        "source_ami": "{{user `ubuntu_18_04_ami`}}",
+        "source_ami": "{{.SourceAMI}}",
         "build_date": "{{isotime}}",
         "distribution": "Ubuntu",
         "distribution_release": "bionic",
@@ -66,7 +66,7 @@
       "subnet_id": "{{user `build_subnet_id`}}",
       "tags": {
         "build_timestamp": "{{user `build_timestamp`}}",
-        "source_ami": "{{user `centos_7_ami`}}",
+        "source_ami": "{{.SourceAMI}}",
         "build_date": "{{isotime}}",
         "distribution": "CentOS",
         "distribution_release": "Core",
@@ -91,7 +91,7 @@
       "subnet_id": "{{user `build_subnet_id`}}",
       "tags": {
         "build_timestamp": "{{user `build_timestamp`}}",
-        "source_ami": "{{user `amazon_2_ami`}}",
+        "source_ami": "{{.SourceAMI}}",
         "build_date": "{{isotime}}",
         "distribution": "Amazon Linux",
         "distribution_release": "Amazon Linux 2",
