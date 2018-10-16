@@ -18,6 +18,17 @@
       "type": "amazon-ebs",
       "instance_type": "t2.small",
       "source_ami": "{{user `ubuntu_18_04_ami`}}",
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*",
+          "root-device-type": "ebs"
+        },
+        "owners": [
+          "099720109477"
+        ],
+        "most_recent": true
+      },
       "ami_name": "ami-ubuntu-18.04-{{user `kubernetes_version`}}-{{user `build_timestamp`}}",
       "ami_groups": "{{user `ami_groups`}}",
       "ami_regions": "{{user `ami_regions`}}",
