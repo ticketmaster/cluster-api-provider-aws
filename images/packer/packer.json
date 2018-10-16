@@ -5,6 +5,7 @@
     "build_timestamp": "{{timestamp}}",
     "cri_containerd_version": "1.1.4",
     "cri_containerd_sha256": "6a3c1cd4eed732bb67b2528eb230db076c9fd30ae12893463f4608f3388c0aeb",
+    "ssh_admin_net": "10.0.0.0/8",
     "kubernetes_version": "1.12.0-00",
     "kubernetes_cni_version": "0.6.0-00",
     "existing_ansible_ssh_args": "{{env `ANSIBLE_SSH_ARGS`}}",
@@ -109,7 +110,9 @@
       ],
       "extra_arguments": [
         "--extra-vars",
-        "cri_containerd_version={{user `cri_containerd_version`}} cri_containerd_sha256={{user `cri_containerd_sha256`}} kubernetes_version={{user `kubernetes_version`}} kubernetes_cni_version={{user `kubernetes_cni_version`}}"
+        "cri_containerd_version={{user `cri_containerd_version`}} cri_containerd_sha256={{user `cri_containerd_sha256`}} sshd_admin_net={{user `ssh_admin_net`}}",
+        "--extra-vars",
+        "kubernetes_version={{user `kubernetes_version`}} kubernetes_cni_version={{user `kubernetes_cni_version`}}"
       ]
     }
   ]
