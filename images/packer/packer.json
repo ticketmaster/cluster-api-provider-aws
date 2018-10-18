@@ -5,7 +5,6 @@
     "build_timestamp": "{{timestamp}}",
     "cri_containerd_version": "1.1.4",
     "cri_containerd_sha256": "6a3c1cd4eed732bb67b2528eb230db076c9fd30ae12893463f4608f3388c0aeb",
-    "ssh_admin_net": "10.0.0.0/8",
     "kubernetes_version": "1.12.0-00",
     "kubernetes_cni_version": "0.6.0-00",
     "existing_ansible_ssh_args": "{{env `ANSIBLE_SSH_ARGS`}}",
@@ -14,7 +13,7 @@
   },
   "builders": [
     {
-      "name": "ubuntu-1804",
+      "name": "ubuntu-1804-amazon",
       "type": "amazon-ebs",
       "instance_type": "t2.small",
       "source_ami": "{{user `ubuntu_18_04_ami`}}",
@@ -49,6 +48,25 @@
         "kubernetes_version": "{{user `kubernetes_version`}}",
         "kubernetes_cni_version": "{{user `kubernetes_cni_version`}}"
       }
+    },
+    {
+      "name": "ubuntu-1804-cloudstack",
+      "type": "cloudstack",
+      "api_url": "{{user `cloudstack_api_url`}}",
+      "api_key": "{{user `cloudstack_api_key`}}",
+      "secret_key": "{{user `cloudstack_secret_key`}}",
+      "disk_offering": "Small",
+      "hypervisor": "KVM",
+      "network": "{{user `cloudstack_network`}}",
+      "project": "{{user `cloudstack_project`}}",
+      "service_offering": "GP1-1-1",
+      "source_iso": "{{user `cloudstack_source_iso`}}",
+      "ssl_no_verify": true,
+      "zone": "{{user `cloudstack_region`}}",
+      "ssh_username": "ubuntu",
+      "template_name": "ubuntu-18.04-{{user `kubernetes_version`}}-{{user `build_timestamp`}}",
+      "template_requires_hvm": true,
+      "template_os": "Other Ubuntu (64-bit)"
     },
     {
       "name": "centos-7",
@@ -110,7 +128,8 @@
         "sudo apt-get -qq update && sudo apt-get -qqy install python python-pip"
       ],
       "only": [
-        "ubuntu-1804"
+        "ubuntu-1804-amazon",
+        "ubuntu-1804-cloudstack"
       ]
     },
     {
@@ -122,7 +141,9 @@
       ],
       "extra_arguments": [
         "--extra-vars",
-        "cri_containerd_version={{user `cri_containerd_version`}} cri_containerd_sha256={{user `cri_containerd_sha256`}} sshd_admin_net={{user `ssh_admin_net`}}",
+        "cri_containerd_version={{user `cri_containerd_version`}} cri_containerd_sha256={{user `cri_containerd_sha256`}}",
+        "--extra-vars",
+        "dns=\"\" fallback_dns=\"\" sshd_admin_net=10.0.0.0/8",
         "--extra-vars",
         "kubernetes_version={{user `kubernetes_version`}} kubernetes_cni_version={{user `kubernetes_cni_version`}}"
       ]
