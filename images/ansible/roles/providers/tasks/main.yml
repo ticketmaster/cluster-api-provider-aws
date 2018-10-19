@@ -12,6 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ---
-- include_tasks: aws.yml
-  when: provider_name.lower() == 'aws'
+- name: remount /tmp exec
+  command: mount -o remount,exec,nodev,nosuid /tmp
 
+- name: install aws client
+  pip:
+    name: awscli
+    umask: "0022"
+
+- name: remount /tmp noexec
+  command: mount -o remount,mode=1777,strictatime,noexec,nodev,nosuid /tmp
